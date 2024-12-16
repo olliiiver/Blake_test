@@ -1,0 +1,31 @@
+name: Build Matrix Rust SDK
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    runs-on: macos-14
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: aarch64-apple-ios
+          override: true
+
+      - name: Install iOS target
+        run: rustup target add aarch64-apple-ios
+
+      - name: Build
+        working-directory: ./
+        run: |
+          cargo build --target aarch64-apple-ios
