@@ -27,5 +27,8 @@ jobs:
 
       - name: Build
         working-directory: ./
-        run: |
-          cargo build --target aarch64-apple-ios
+        env:
+          CARGO_TARGET_AARCH64_APPLE_IOS_RUSTFLAGS: -Clinker=/usr/bin/clang
+          AARCH64_APPLE_IOS_CC: /usr/bin/clang
+          IPHONEOS_DEPLOYMENT_TARGET: 17.5
+        run: cargo build --target aarch64-apple-ios
